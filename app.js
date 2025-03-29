@@ -80,53 +80,64 @@ app.get('*', (req, res) => {
       <title>404 Not Found</title>
       <style>
         body {
-          font-family: Arial, sans-serif;
-          background-color: #f0f0f0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #f4f6f9;
           color: #333;
+          margin: 0;
+          padding: 0;
           display: flex;
           justify-content: center;
           align-items: center;
           height: 100vh;
-          margin: 0;
         }
         .container {
           text-align: center;
-          padding: 20px;
-          background-color: white;
-          border-radius: 8px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          max-width: 500px;
+          padding: 30px;
+          background-color: #ffffff;
+          border-radius: 12px;
+          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+          max-width: 600px;
+          width: 100%;
         }
         h1 {
-          font-size: 48px;
-          color: #d9534f;
+          font-size: 72px;
+          color: #e74c3c;
+          margin: 0;
         }
         p {
           font-size: 18px;
           color: #555;
+          line-height: 1.6;
         }
         a {
           text-decoration: none;
-          color: #0275d8;
-          font-weight: bold;
+          color: #3498db;
+          font-weight: 600;
+          transition: color 0.3s ease;
         }
         a:hover {
-          text-decoration: underline;
+          color: #2980b9;
+        }
+        .sigma-message {
+          font-size: 22px;
+          color: #e74c3c;
+          font-weight: bold;
+          margin-top: 20px;
+          font-style: italic;
         }
       </style>
     </head>
     <body>
       <div class="container">
         <h1>404</h1>
-        <p>Sorry, the requested endpoint does not exist.</p>
+        <p>Oops! The page you're looking for doesn't exist.</p>
+        <p class="sigma-message">What the sigma! This isn't a page that exists, very skibidi.</p>
         <p><a href="/">Go back to the homepage</a></p>
       </div>
     </body>
     </html>
   `);
 });
-
-
 
 // Start the server on port 3000
 app.listen(PORT, () => {
