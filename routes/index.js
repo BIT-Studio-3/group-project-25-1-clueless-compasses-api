@@ -1,5 +1,5 @@
 /**
- * @file Defines all the routes related to the test /Josh query
+ * @file Defines all the routes related to the test / query
  * @author Clueless Compassess Studio 3 Group
  */
 
@@ -14,14 +14,15 @@ const router = express.Router();
 
 /**
  * @swagger
- * /Josh:
+ * /:
  *   get:
- *     summary: Get the response for Josh query
+ *     summary: Return a "Hello, World!" message
+ *     description: This is the root directory endpoint that returns a simple "Hello, World!" message as a response.
  *     tags:
- *       - Josh Query
+ *       - Hello World Endpoint
  *     responses:
  *       '200':
- *         description: Success
+ *         description: A simple "Hello, World!" message is returned
  *         content:
  *           application/json:
  *             schema:
@@ -33,7 +34,7 @@ const router = express.Router();
  */
 
 // Create a GET route
-router.get('/Josh', getIndex);
+router.get('/', getIndex);
 
 // Export the router
 export default router;
