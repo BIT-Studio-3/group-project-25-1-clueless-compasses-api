@@ -22,6 +22,10 @@ import { isContentTypeApplicationJSON } from "./middleware/utils.js";
 
 import logger from "./middleware/logger.js";
 
+import auth from "./middleware/auth.js";
+
+import authRoutes from "./routes/v1/auth.js";
+
 // Create an Express application
 const app = express();
 
@@ -62,13 +66,15 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use(isContentTypeApplicationJSON);
 
 // Use the user module
-app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/users", auth, userRoutes); // Authenticated route
 
 // Use the api docs module
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Use the routes module
 app.use('/', indexRoutes);
+
+app.use("/api/v1/auth", authRoutes);
 
 app.use((req, res, next) => {
   logger.info(`${req.method} ${req.originalUrl}`);
