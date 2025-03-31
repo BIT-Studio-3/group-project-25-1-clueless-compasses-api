@@ -20,6 +20,8 @@ import userRoutes from "./routes/v1/user.js";
 // This should be declared under - import institutionRoutes from "./routes/v1/institution.js";
 import { isContentTypeApplicationJSON } from "./middleware/utils.js";
 
+import logger from "./middleware/logger.js";
+
 // Create an Express application
 const app = express();
 
@@ -68,6 +70,10 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Use the routes module
 app.use('/', indexRoutes);
 
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.originalUrl}`);
+  next();
+});
 
 // Catch-all handler for undefined routes (Chatgpt generated html)
 app.get('*', (req, res) => {
