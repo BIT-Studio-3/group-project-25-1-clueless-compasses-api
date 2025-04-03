@@ -30,6 +30,13 @@
  *           type: string
  *           format: date-time
  *           example: "2025-03-13T12:00:00Z"
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ *   security:
+ *     - BearerAuth: []
  */
 
 /**
@@ -39,6 +46,8 @@
  *     summary: Create a new user
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:

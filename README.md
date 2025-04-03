@@ -14,4 +14,6 @@ docker run --name clueless-compasses-dev -e POSTGRES_PASSWORD=HelloWorld123 -p 5
 ```bash
 APP_ENV=development
 DATABASE_URL="postgresql://postgres:HelloWorld123@localhost:5434/postgres"
+JWT_SECRET=HelloWorld123
+JWT_LIFETIME=1hr
 ```
