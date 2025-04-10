@@ -26,6 +26,7 @@ import auth from "./middleware/auth.js";
 
 import authRoutes from "./routes/v1/auth.js";
 
+import logoutRoute from "./routes/v1/logout.js"
 // Create an Express application
 const app = express();
 
@@ -75,6 +76,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/', indexRoutes);
 
 app.use("/api/v1/auth", authRoutes);
+
+app.use("/api", logoutRoute)
+
 
 app.use((req, res, next) => {
   logger.info(`${req.method} ${req.originalUrl}`);
