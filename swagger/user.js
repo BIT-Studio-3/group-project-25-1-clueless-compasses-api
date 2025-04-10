@@ -80,6 +80,8 @@
  *     summary: Get all users
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: query
  *         name: firstName
@@ -132,6 +134,8 @@
  *     summary: Get a user by ID
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -159,6 +163,8 @@
  *     summary: Update a user by ID
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -188,6 +194,8 @@
  *     summary: Delete a user by ID
  *     tags:
  *       - User
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
