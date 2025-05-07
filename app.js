@@ -12,6 +12,9 @@ import swaggerJSDoc from "swagger-jsdoc";
 // This should be declared under - import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
+// Imported to fix CORS related issues
+import cors from "cors";
+
 // Import the index routes module
 import indexRoutes from './routes/index.js';
 
@@ -41,6 +44,8 @@ app.use(express.urlencoded({ extended: false })); // To parse the incoming reque
 
 // This should be declared under - app.use(urlencoded({ extended: false }));
 app.use(express.json()); // To parse the incoming requests with JSON payloads. For example, REST API requests
+
+app.use(cors());
 
 // This should be declared under - app.use(express.json());
 const swaggerOptions = {
