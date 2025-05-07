@@ -73,11 +73,11 @@ app.use(isContentTypeApplicationJSON);
 // Use the user module
 app.use("/api/v1/users", auth, userRoutes); // Authenticated route
 
-app.use("/api/v1/hazards", hazardRoutes);
+app.use("/api/v1/hazards", hazardRoutes); //removed auth till login is sorted
 
 app.use("/api/v1/incidents", incidentRoutes); //removed auth till login is sorted
 
-app.use("/api/v1/auth", authRoutes); //removed auth till login is sorted
+app.use("/api/v1/auth", authRoutes); 
 
 // Use the api docs module
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
