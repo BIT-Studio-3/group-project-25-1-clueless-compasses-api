@@ -28,6 +28,8 @@ import authRoutes from "./routes/v1/auth.js";
 
 import hazardRoutes from "./routes/v1/hazard.js";
 
+import incidentRoutes from "./routes/v1/incident.js";
+
 
 // Create an Express application
 const app = express();
@@ -72,6 +74,8 @@ app.use(isContentTypeApplicationJSON);
 app.use("/api/v1/users", auth, userRoutes); // Authenticated route
 
 app.use("/api/v1/hazards", auth, hazardRoutes);
+
+app.use("/api/v1/incidents", auth, incidentRoutes);
 
 app.use("/api/v1/auth", authRoutes);
 

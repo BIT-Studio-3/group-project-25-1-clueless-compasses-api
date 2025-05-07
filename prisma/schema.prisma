@@ -36,3 +36,16 @@ model Hazard {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @default(now())
 }
+
+model Incident {
+  id             String   @id @default(uuid())
+  description    String
+  cause          String
+  suburb         String
+  street         String?
+  buildingNumber String?
+  recordedAt     DateTime
+  photoUrl       String? // assuming you store the file URL
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
+}
