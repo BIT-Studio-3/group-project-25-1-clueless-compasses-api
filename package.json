@@ -8,7 +8,8 @@
     "dev": "nodemon app.js",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:reset": "npx prisma migrate reset --force",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "node ./prisma/seeding/seedUsers.js"
   },
   "type": "module",
   "keywords": [],
