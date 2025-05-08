@@ -21,7 +21,7 @@
  *           example: "john.doe@example.com"
  *         password:
  *           type: string
- *           example: "password123"
+ *           example: "securepassword123"
  *         loginAttempts:
  *           type: integer
  *           example: 3
@@ -107,7 +107,7 @@
  *                 example: "john.doe@example.com"
  *               password:
  *                 type: string
- *                 example: "password123"
+ *                 example: "securepassword123"
  *     responses:
  *       '200':
  *         description: User successfully logged in

@@ -14,13 +14,38 @@ datasource db {
 }
 
 model User {
-  id               String        @id @default(uuid())
+  id               String    @id @default(uuid())
   firstName        String
   lastName         String
-  emailAddress     String        @unique
+  emailAddress     String    @unique
   password         String
-  loginAttempts    Int           @default(0)
+  loginAttempts    Int       @default(0)
   lastLoginAttempt DateTime?
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @default(now())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @default(now())
+}
+
+model Hazard {
+  id              String   @id @default(uuid())
+  agency          String
+  address         String
+  severity        String
+  status          String
+  contactInfo     String
+  RelevantDetails String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
+}
+
+model Incident {
+  id             String   @id @default(uuid())
+  description    String
+  cause          String
+  suburb         String
+  street         String?
+  buildingNumber String?
+  recordedAt     DateTime
+  photoUrl       String? // assuming you store the file URL
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
 }

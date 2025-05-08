@@ -2,34 +2,32 @@
  * @swagger
  * components:
  *   schemas:
- *     User:
+ *     Incident:
  *       type: object
  *       properties:
  *         id:
+ *         description:
  *           type: string
- *           format: uuid
- *           example: "123e4567-e89b-12d3-a456-426614174000"
- *         firstName:
+ *           example: "Fire at the old warehouse"
+ *         cause:
  *           type: string
- *           example: "John"
- *         lastName:
+ *           example: "Electrical malfunction"
+ *         suburb:
  *           type: string
- *           example: "Doe"
- *         emailAddress:
+ *           example: "Dunedin"
+ *         street:
  *           type: string
- *           format: email
- *           example: "john.doe@example.com"
- *         password:
+ *           example: "George Street"
+ *         buildingNumber:
  *           type: string
- *           example: "securepassword123"
- *         createdAt:
- *           type: string
- *           format: date-time
- *           example: "2025-03-13T12:00:00Z"
- *         updatedAt:
+ *           example: "12"
+ *         recordedAt:
  *           type: string
  *           format: date-time
- *           example: "2025-03-13T12:00:00Z"
+ *           example: "2025-04-25T14:00:00Z"
+ *         photoUrl:
+ *           type: string
+ *           example: "https://example.com/photo.jpg"
  *   securitySchemes:
  *     BearerAuth:
  *       type: http
@@ -41,11 +39,11 @@
 
 /**
  * @swagger
- * /api/v1/users:
+ * /api/v1/incidents:
  *   post:
- *     summary: Create a new user
+ *     summary: Create a new incident
  *     tags:
- *       - User
+ *       - Incident
  *     security:
  *       - BearerAuth: []
  *     requestBody:
@@ -53,10 +51,10 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             $ref: '#/components/schemas/Incident'
  *     responses:
  *       '201':
- *         description: User successfully created
+ *         description: Incident successfully created
  *         content:
  *           application/json:
  *             schema:
@@ -64,54 +62,64 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "User successfully created"
+ *                   example: "Incident successfully created"
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/User'
+ *                     $ref: '#/components/schemas/Incident'
  *       '500':
  *         description: Internal server error
  */
 
 /**
  * @swagger
- * /api/v1/users:
+ * /api/v1/incidents:
  *   get:
- *     summary: Get all users
+ *     summary: Get all incidents
  *     tags:
- *       - User
+ *       - Incident
  *     security:
  *       - BearerAuth: []
  *     parameters:
  *       - in: query
- *         name: firstName
+ *         name: description
  *         schema:
  *           type: string
- *         description: Filter users by first name
+ *         description: Filter incidents by description
  *       - in: query
- *         name: lastName
+ *         name: cause
  *         schema:
  *           type: string
- *         description: Filter users by last name
+ *         description: Filter incidents by cause
  *       - in: query
- *         name: emailAddress
+ *         name: suburb
  *         schema:
  *           type: string
- *         description: Filter users by email address
+ *         description: Filter incidents by suburb
  *       - in: query
- *         name: sort
+ *         name: street
+ *         schema:
+ *           type: string
+ *         description: Filter incidents by street
+ *       - in: query
+ *         name: buildingNumber
+ *         schema:
+ *           type: string
+ *         description: Filter incidents by building number
+ *       - in: query
+ *         name: sortBy
  *         schema:
  *           type: string
  *           default: "id"
- *           enum: [id, firstName, lastName, emailAddress]
- *         description: Field to sort the users by (default is 'id')
+ *           enum: [id, description, cause, suburb, street, buildingNumber, recordedAt]
+ *         description: Field to sort the incidents by (default is 'id')
  *       - in: query
  *         name: sortOrder
  *         schema:
  *           type: string
  *           default: "asc"
  *           enum: [asc, desc]
- *         description: Order to sort the users by (default is 'asc')
+ *         description: Order to sort the incidents by (default is 'asc')
  *     responses:
  *       '200':
  *         description: Success
@@ -120,20 +128,20 @@
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/User'
+ *                 $ref: '#/components/schemas/Incident'
  *       '404':
- *         description: No users found
+ *         description: No incidents found
  *       '500':
  *         description: Internal server error
  */
 
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /api/v1/incidents/{id}:
  *   get:
- *     summary: Get a user by ID
+ *     summary: Get an incident by ID
  *     tags:
- *       - User
+ *       - Incident
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -142,27 +150,27 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: The user ID
+ *         description: The incident ID
  *     responses:
  *       '200':
  *         description: Success
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/Incident'
  *       '404':
- *         description: No user found with the provided ID
+ *         description: No incident found with the provided ID
  *       '500':
  *         description: Internal server error
  */
 
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /api/v1/incidents/{id}:
  *   put:
- *     summary: Update a user by ID
+ *     summary: Update an incident by ID
  *     tags:
- *       - User
+ *       - Incident
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -171,29 +179,29 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: The user ID
+ *         description: The incident ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             $ref: '#/components/schemas/Incident'
  *     responses:
  *       '200':
- *         description: User successfully updated
+ *         description: Incident successfully updated
  *       '404':
- *         description: No user found with the provided ID
+ *         description: No incident found with the provided ID
  *       '500':
  *         description: Internal server error
  */
 
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /api/v1/incidents/{id}:
  *   delete:
- *     summary: Delete a user by ID
+ *     summary: Delete an incident by ID
  *     tags:
- *       - User
+ *       - Incident
  *     security:
  *       - BearerAuth: []
  *     parameters:
@@ -202,12 +210,12 @@
  *         required: true
  *         schema:
  *           type: string
- *         description: The user ID
+ *         description: The incident ID
  *     responses:
  *       '200':
- *         description: User successfully deleted
+ *         description: Incident successfully deleted
  *       '404':
- *         description: No user found with the provided ID
+ *         description: No incident found with the provided ID
  *       '500':
  *         description: Internal server error
  */

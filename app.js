@@ -29,6 +29,11 @@ import auth from "./middleware/auth.js";
 
 import authRoutes from "./routes/v1/auth.js";
 
+import hazardRoutes from "./routes/v1/hazard.js";
+
+import incidentRoutes from "./routes/v1/incident.js";
+
+
 // Create an Express application
 const app = express();
 
@@ -73,13 +78,18 @@ app.use(isContentTypeApplicationJSON);
 // Use the user module
 app.use("/api/v1/users", auth, userRoutes); // Authenticated route
 
+app.use("/api/v1/hazards", hazardRoutes); //removed auth till login is sorted
+
+app.use("/api/v1/incidents", incidentRoutes); //removed auth till login is sorted
+
+app.use("/api/v1/auth", authRoutes); 
+
 // Use the api docs module
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Use the routes module
 app.use('/', indexRoutes);
 
-app.use("/api/v1/auth", authRoutes);
 
 app.use((req, res, next) => {
   logger.info(`${req.method} ${req.originalUrl}`);
