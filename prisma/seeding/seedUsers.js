@@ -1,24 +1,28 @@
-import prisma from "../client.js";
-import bcrypt from "bcryptjs";
+import pkg from '@prisma/client';
+import bcrypt from 'bcrypt';
+
+const { PrismaClient, Role } = pkg;
+
+const prisma = new PrismaClient();
 
 const seedUsers = async () => {
   try {
     // Delete existing users to avoid duplicates
     await prisma.user.deleteMany();
 
-    // Sample user data
+    // Sample user data with roles
     const userData = [
       {
         firstName: "John",
         lastName: "Doe",
-        emailAddress: "johndoe@example.com",
+        emailAddress: "admin@example.com",
         password: await bcrypt.hash("password123", 10),
         role: Role.ADMIN, // John is an admin
       },
       {
         firstName: "Jane",
         lastName: "Smith",
-        emailAddress: "janesmith@example.com",
+        emailAddress: "basic@example.com",
         password: await bcrypt.hash("password123", 10),
         role: Role.BASIC, // Jane is a regular user
       },
@@ -31,7 +35,7 @@ const seedUsers = async () => {
       },
     ];
 
-    // Insert users
+    // Insert users with roles
     await prisma.user.createMany({
       data: userData,
       skipDuplicates: true, // Prevent duplicates
@@ -42,5 +46,4 @@ const seedUsers = async () => {
     console.log("Seeding users failed:", err.message);
   }
 };
-
 seedUsers();

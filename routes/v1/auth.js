@@ -1,11 +1,9 @@
-import { Router } from "express";
+import express from "express";
+import { login } from "../../controllers/v1/auth.js"; // Ensure this is the correct path
 
-import { register, login } from "../../controllers/v1/auth.js";
+const router = express.Router();
 
-const router = Router();
-
-router.route("/register").post(register);
-
-router.route("/login").post(login);
+// Register the route for /api/v1/auth/login
+router.post("/login", login);
 
 export default router;
