@@ -3,28 +3,20 @@
  * @author Clueless Compassess Studio 3 Group
  */
 
-// Import the Express module
 import express from 'express';
+import cors from 'cors';
 
-// This should be declared under - import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
-
-// This should be declared under - import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
-// Import the index routes module
-import indexRoutes from './routes/index.js';
-
-import userRoutes from "./routes/v1/user.js";
-
-// This should be declared under - import institutionRoutes from "./routes/v1/institution.js";
 import { isContentTypeApplicationJSON } from "./middleware/utils.js";
-
 import logger from "./middleware/logger.js";
-
 import auth from "./middleware/auth.js";
 
 import authRoutes from "./routes/v1/auth.js";
+import indexRoutes from './routes/index.js';
+import userRoutes from "./routes/v1/user.js";
+import logoutRoute from "./routes/v1/logout.js"
 
 // Create an Express application
 const app = express();
@@ -36,6 +28,13 @@ app.use(express.urlencoded({ extended: false })); // To parse the incoming reque
 
 // This should be declared under - app.use(urlencoded({ extended: false }));
 app.use(express.json()); // To parse the incoming requests with JSON payloads. For example, REST API requests
+
+app.use(cors({
+  origin: 'http://localhost:5173',  // Allow requests from your Svelte app
+  methods: ['GET', 'POST'],
+  credentials: true,  // Allow cookies (if you're using them)
+}));
+
 
 // This should be declared under - app.use(express.json());
 const swaggerOptions = {
@@ -75,6 +74,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/', indexRoutes);
 
 app.use("/api/v1/auth", authRoutes);
+
+app.use("/api/v1/auth", logoutRoute);
+
 
 app.use((req, res, next) => {
   logger.info(`${req.method} ${req.originalUrl}`);
