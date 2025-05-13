@@ -21,6 +21,7 @@ model User {
   password         String
   loginAttempts    Int       @default(0)
   lastLoginAttempt DateTime?
+  role             Role      @default(BASIC)
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @default(now())
 }
@@ -48,4 +49,16 @@ model Incident {
   photoUrl       String? // assuming you store the file URL
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
+}
+
+model Blacklist {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  BASIC
 }

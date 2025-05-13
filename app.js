@@ -3,34 +3,21 @@
  * @author Clueless Compassess Studio 3 Group
  */
 
-// Import the Express module
 import express from 'express';
+import cors from 'cors';
 
-// This should be declared under - import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
-
-// This should be declared under - import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
-// Imported to fix CORS related issues
-import cors from "cors";
-
-// Import the index routes module
-import indexRoutes from './routes/index.js';
-
-import userRoutes from "./routes/v1/user.js";
-
-// This should be declared under - import institutionRoutes from "./routes/v1/institution.js";
 import { isContentTypeApplicationJSON } from "./middleware/utils.js";
-
 import logger from "./middleware/logger.js";
-
 import auth from "./middleware/auth.js";
 
 import authRoutes from "./routes/v1/auth.js";
-
+import indexRoutes from './routes/index.js';
+import userRoutes from "./routes/v1/user.js";
+import logoutRoute from "./routes/v1/logout.js"
 import hazardRoutes from "./routes/v1/hazard.js";
-
 import incidentRoutes from "./routes/v1/incident.js";
 
 
@@ -89,6 +76,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Use the routes module
 app.use('/', indexRoutes);
+
+
+app.use("/api/v1/auth", logoutRoute);
 
 
 app.use((req, res, next) => {
