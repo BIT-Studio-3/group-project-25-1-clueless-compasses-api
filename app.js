@@ -17,6 +17,9 @@ import authRoutes from "./routes/v1/auth.js";
 import indexRoutes from './routes/index.js';
 import userRoutes from "./routes/v1/user.js";
 import logoutRoute from "./routes/v1/logout.js"
+import hazardRoutes from "./routes/v1/hazard.js";
+import incidentRoutes from "./routes/v1/incident.js";
+
 
 // Create an Express application
 const app = express();
@@ -29,12 +32,7 @@ app.use(express.urlencoded({ extended: false })); // To parse the incoming reque
 // This should be declared under - app.use(urlencoded({ extended: false }));
 app.use(express.json()); // To parse the incoming requests with JSON payloads. For example, REST API requests
 
-app.use(cors({
-  origin: 'http://localhost:5173',  // Allow requests from your Svelte app
-  methods: ['GET', 'POST'],
-  credentials: true,  // Allow cookies (if you're using them)
-}));
-
+app.use(cors());
 
 // This should be declared under - app.use(express.json());
 const swaggerOptions = {
@@ -67,13 +65,18 @@ app.use(isContentTypeApplicationJSON);
 // Use the user module
 app.use("/api/v1/users", auth, userRoutes); // Authenticated route
 
+app.use("/api/v1/hazards", hazardRoutes); //removed auth till login is sorted
+
+app.use("/api/v1/incidents", incidentRoutes); //removed auth till login is sorted
+
+app.use("/api/v1/auth", authRoutes); 
+
 // Use the api docs module
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Use the routes module
 app.use('/', indexRoutes);
 
-app.use("/api/v1/auth", authRoutes);
 
 app.use("/api/v1/auth", logoutRoute);
 
