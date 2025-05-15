@@ -16,6 +16,13 @@ const validatePostIncident = (req, res, next) => {
             "string.max": "cause should have a maximum length of {#limit}",
             "any.required": "cause is required",
         }),
+        source : Joi.string().min(3).max(200).required().messages({
+            "string.base": "source  should be a string",
+            "string.empty": "source  cannot be empty",
+            "string.min": "source  should have a minimum length of {#limit}",
+            "string.max": "source  should have a maximum length of {#limit}",
+            "any.required": "source  is required",
+        }),
         suburb: Joi.string().min(3).max(100).required().messages({
             "string.base": "suburb should be a string",
             "string.empty": "suburb cannot be empty",
@@ -67,6 +74,12 @@ const validatePutIncident = (req, res, next) => {
             "string.empty": "cause cannot be empty",
             "string.min": "cause should have a minimum length of {#limit}",
             "string.max": "cause should have a maximum length of {#limit}",
+        }),
+        source : Joi.string().min(3).max(200).optional().messages({
+            "string.base": "source  should be a string",
+            "string.empty": "source  cannot be empty",
+            "string.min": "source  should have a minimum length of {#limit}",
+            "string.max": "source  should have a maximum length of {#limit}",
         }),
         suburb: Joi.string().min(3).max(100).optional().messages({
             "string.base": "suburb should be a string",
