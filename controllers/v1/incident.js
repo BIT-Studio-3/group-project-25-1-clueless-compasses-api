@@ -11,6 +11,7 @@ const returnData = {
     id: true,
     description: true,
     cause: true,
+    Source: true,
     suburb: true,
     street: true,
     buildingNumber: true,
@@ -42,6 +43,7 @@ const getIncidents = async (req, res) => {
         const filters = {
             description: req.query.description || undefined,
             cause: req.query.cause || undefined,
+            Source: req.query.Source || undefined,
             suburb: req.query.suburb || undefined,
             street: req.query.street || undefined,
             buildingNumber: req.query.buildingNumber || undefined,
