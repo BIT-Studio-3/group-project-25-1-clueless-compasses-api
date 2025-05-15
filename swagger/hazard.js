@@ -24,6 +24,9 @@
  *         contactInfo:
  *           type: string
  *           example: "0800 DEFENCE"
+ *         Source:
+ *           type: string
+ *           example: "ODT"
  *         RelevantDetails:
  *           type: string
  *           example: "Flooding in residential area"
@@ -79,6 +82,7 @@
  *               severity: "High"
  *               status: "Active"
  *               contactInfo: "0800 DEFENCE"
+ *               Source: "ODT"
  *               RelevantDetails: "Flooding in residential area, water levels rising rapidly"
  *     responses:
  *       '201':
@@ -126,6 +130,10 @@
  *           type: string
  *       - in: query
  *         name: contactInfo
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: Source
  *         schema:
  *           type: string
  *       - in: query

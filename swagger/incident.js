@@ -12,6 +12,9 @@
  *         cause:
  *           type: string
  *           example: "Electrical malfunction"
+ *         Source:
+ *           type: string
+ *           example: "ODT"
  *         suburb:
  *           type: string
  *           example: "Dunedin"
@@ -91,6 +94,11 @@
  *         schema:
  *           type: string
  *         description: Filter incidents by cause
+ *       - in: query
+ *         name: Source
+ *         schema:
+ *           type: string
+ *         description: Filter incidents by Source
  *       - in: query
  *         name: suburb
  *         schema:
