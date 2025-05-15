@@ -33,6 +33,7 @@ model Hazard {
   severity        String
   status          String
   contactInfo     String
+  Source          String
   RelevantDetails String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @default(now())
@@ -42,6 +43,7 @@ model Incident {
   id             String   @id @default(uuid())
   description    String
   cause          String
+  Source         String
   suburb         String
   street         String?
   buildingNumber String?
