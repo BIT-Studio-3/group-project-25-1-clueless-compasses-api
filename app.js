@@ -34,6 +34,10 @@ app.use(express.json()); // To parse the incoming requests with JSON payloads. F
 
 app.use(cors());
 
+// Tells the Express where to find image urls
+app.use('/uploads', express.static('uploads'));
+
+
 // This should be declared under - app.use(express.json());
 const swaggerOptions = {
   definition: {

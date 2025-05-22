@@ -1,9 +1,5 @@
-/**
- * @file This file exports the router for the incident routes.
- * @author Clueless Compassess Studio 3 Group
- */
-
 import createRouter from "./base.js";
+import upload from "../../middleware/uploadMiddleware.js";
 
 import {
   getIncident,
@@ -26,10 +22,19 @@ const incidentController = {
   delete: deleteIncident,
 };
 
+
 const incidentRouter = createRouter(
   incidentController,
   validatePostIncident,
-  validatePutIncident,
+  validatePutIncident
+);
+
+// Overrides createIncident
+incidentRouter.post(
+  '/',
+  upload.single('photo'),      // This parses the blob data for the photo
+  validatePostIncident,        // Rerun validation
+  createIncident               // Then the controller
 );
 
 export default incidentRouter;
