@@ -1,9 +1,5 @@
-/**
- * @file This file exports the router for the incident routes.
- * @author Clueless Compassess Studio 3 Group
- */
-
-import createRouter from "./base.js";
+import express from 'express';
+import upload from '../../middleware/uploadMiddleware.js';
 
 import {
   getIncident,
@@ -16,20 +12,22 @@ import {
 import {
   validatePostIncident,
   validatePutIncident,
-} from "../../middleware/validation/incident.js";
+} from '../../middleware/validation/incident.js';
 
-const incidentController = {
-  get: getIncidents,
-  getById: getIncident,
-  create: createIncident,
-  update: updateIncident,
-  delete: deleteIncident,
-};
+const router = express.Router();
 
-const incidentRouter = createRouter(
-  incidentController,
-  validatePostIncident,
-  validatePutIncident,
+// ✅ Custom multipart/form-data route with file upload
+router.post(
+  '/',
+  upload.single('photo'),         // 🟢 parse FormData
+  validatePostIncident,           // 🟢 validate body
+  createIncident                  // 🟢 save to DB
 );
 
-export default incidentRouter;
+// ✅ Other standard routes
+router.get('/', getIncidents);
+router.get('/:id', getIncident);
+router.put('/:id', validatePutIncident, updateIncident);
+router.delete('/:id', deleteIncident);
+
+export default router;

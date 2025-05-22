@@ -1,17 +1,22 @@
 const isContentTypeApplicationJSON = (req, res, next) => {
-    // Check if the request method is POST or PUT
-    if (req.method === "POST" || req.method === "PUT") {
-      // Check if the Content-Type header is application/json
-      const contentType = req.headers["content-type"];
-      if (!contentType || contentType !== "application/json") {
-        return res.status(409).json({
-          error: {
-            message: "Content-Type must be application/json",
-          },
-        });
-      }
+  // Check if the request method is POST or PUT
+  if (req.method === 'POST' || req.method === 'PUT') {
+    // Check if the Content-Type header is application/json
+    const contentType = req.headers['content-type'];
+    if (
+      !contentType ||
+      (!contentType.includes('application/json') &&
+        !contentType.includes('multipart/form-data'))
+    ) {
+      return res.status(409).json({
+        error: {
+          message:
+            'Content-Type must be application/json or multipart/form-data',
+        },
+      });
     }
-    next();
-  };
-  
-  export { isContentTypeApplicationJSON };
+  }
+  next();
+};
+
+export { isContentTypeApplicationJSON };

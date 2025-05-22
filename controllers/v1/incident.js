@@ -19,22 +19,33 @@ const returnData = {
 };
 
 const createIncident = async (req, res) => {
-    // Try/catch blocks are used to handle exceptions
-    try {
-        await incidentRepository.create(req.body);
-        const newIncidents = await incidentRepository.findAll(returnData);
+  try {
+    const image = req.file;
+    const photoUrl = image ? `/uploads/${image.filename}` : null;
 
-        // Send a JSON response
-        return res.status(201).json({
-            message: "Incident successfully created",
-            data: newIncidents,
-        });
-    } catch (err) {
-        return res.status(500).json({
-            message: err.message,
-        });
+    // Manually change datetime
+    if (req.body.recordedAt) {
+      req.body.recordedAt = new Date(req.body.recordedAt);
     }
+
+    const incidentData = {
+      ...req.body,
+      photoUrl,
+    };
+
+    await incidentRepository.create(incidentData);
+    const newIncidents = await incidentRepository.findAll(returnData);
+
+    return res.status(201).json({
+      message: "Incident successfully created",
+      data: newIncidents,
+    });
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
 };
+
+
 
 const getIncidents = async (req, res) => {
     try {

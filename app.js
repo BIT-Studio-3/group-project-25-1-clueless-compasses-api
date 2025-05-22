@@ -30,9 +30,21 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false })); // To parse the incoming requests with urlencoded payloads. For example, form data
 
 // This should be declared under - app.use(urlencoded({ extended: false }));
-app.use(express.json()); // To parse the incoming requests with JSON payloads. For example, REST API requests
+// JSON parsing middleware — only for JSON routes
+app.use((req, res, next) => {  // To parse the incoming requests with JSON payloads. For example, REST API requests
+  if (req.is('application/json')) {
+    express.json()(req, res, next);
+  } else {
+    next();
+  }
+});
+
 
 app.use(cors());
+
+// Tells the Express where to find image urls
+app.use('/uploads', express.static('uploads'));
+
 
 // This should be declared under - app.use(express.json());
 const swaggerOptions = {
