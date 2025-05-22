@@ -4,9 +4,8 @@ const validatePostIncident = (req, res, next) => {
   if (req.body.recordedAt && typeof req.body.recordedAt === 'string') {
     req.body.recordedAt = new Date(req.body.recordedAt);
   }
-  
+
   const incidentSchema = Joi.object({
-    
     description: Joi.string().min(3).max(500).required().messages({
       'string.base': 'description should be a string',
       'string.empty': 'description cannot be empty',
@@ -54,14 +53,14 @@ const validatePostIncident = (req, res, next) => {
   });
 
   const { error } = incidentSchema.validate(req.body);
-  console.log('Incoming req.body in validatePostIncident:', req.body);
-  
+  console.log('📦 req.body:', req.body);
+  console.log('🖼️ req.file:', req.file);
+
   if (error) {
     return res.status(409).json({
       message: error.details[0].message,
     });
   }
-
 
   next();
 };
