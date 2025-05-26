@@ -42,9 +42,7 @@ model Incident {
   id             String   @id @default(uuid())
   description    String
   cause          String
-  suburb         String
-  street         String?
-  buildingNumber String?
+  address        String
   recordedAt     DateTime
   photoUrl       String? // assuming you store the file URL
   createdAt      DateTime @default(now())

@@ -20,28 +20,13 @@ const validatePostIncident = (req, res, next) => {
       'string.max': 'cause should have a maximum length of {#limit}',
       'any.required': 'cause is required',
     }),
-    suburb: Joi.string().min(3).max(100).required().messages({
-      'string.base': 'suburb should be a string',
-      'string.empty': 'suburb cannot be empty',
-      'string.min': 'suburb should have a minimum length of {#limit}',
-      'string.max': 'suburb should have a maximum length of {#limit}',
-      'any.required': 'suburb is required',
+    address: Joi.string().min(5).max(255).required().messages({
+      'string.base': 'address should be a string',
+      'string.empty': 'address cannot be empty',
+      'string.min': 'address should have a minimum length of {#limit}',
+      'string.max': 'address should have a maximum length of {#limit}',
+      'any.required': 'address is required',
     }),
-    street: Joi.string().min(3).max(100).optional().allow(null, '').messages({
-      'string.base': 'street should be a string',
-      'string.min': 'street should have a minimum length of {#limit}',
-      'string.max': 'street should have a maximum length of {#limit}',
-    }),
-    buildingNumber: Joi.string()
-      .min(1)
-      .max(50)
-      .optional()
-      .allow(null, '')
-      .messages({
-        'string.base': 'buildingNumber should be a string',
-        'string.min': 'buildingNumber should have a minimum length of {#limit}',
-        'string.max': 'buildingNumber should have a maximum length of {#limit}',
-      }),
     recordedAt: Joi.date().required().messages({
       'date.base': 'recordedAt should be a valid date',
       'any.required': 'recordedAt is required',
@@ -79,27 +64,12 @@ const validatePutIncident = (req, res, next) => {
       'string.min': 'cause should have a minimum length of {#limit}',
       'string.max': 'cause should have a maximum length of {#limit}',
     }),
-    suburb: Joi.string().min(3).max(100).optional().messages({
-      'string.base': 'suburb should be a string',
-      'string.empty': 'suburb cannot be empty',
-      'string.min': 'suburb should have a minimum length of {#limit}',
-      'string.max': 'suburb should have a maximum length of {#limit}',
+    address: Joi.string().min(3).max(100).optional().messages({
+      'string.base': 'address should be a string',
+      'string.empty': 'address cannot be empty',
+      'string.min': 'address should have a minimum length of {#limit}',
+      'string.max': 'address should have a maximum length of {#limit}',
     }),
-    street: Joi.string().min(3).max(100).optional().allow(null, '').messages({
-      'string.base': 'street should be a string',
-      'string.min': 'street should have a minimum length of {#limit}',
-      'string.max': 'street should have a maximum length of {#limit}',
-    }),
-    buildingNumber: Joi.string()
-      .min(1)
-      .max(50)
-      .optional()
-      .allow(null, '')
-      .messages({
-        'string.base': 'buildingNumber should be a string',
-        'string.min': 'buildingNumber should have a minimum length of {#limit}',
-        'string.max': 'buildingNumber should have a maximum length of {#limit}',
-      }),
     recordedAt: Joi.date().optional().messages({
       'date.base': 'recordedAt should be a valid date',
     }),
