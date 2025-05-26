@@ -11,9 +11,7 @@ const returnData = {
     id: true,
     description: true,
     cause: true,
-    suburb: true,
-    street: true,
-    buildingNumber: true,
+    address: true,
     recordedAt: true,
     photoUrl: true,
 };
@@ -42,9 +40,7 @@ const getIncidents = async (req, res) => {
         const filters = {
             description: req.query.description || undefined,
             cause: req.query.cause || undefined,
-            suburb: req.query.suburb || undefined,
-            street: req.query.street || undefined,
-            buildingNumber: req.query.buildingNumber || undefined,
+            address: req.query.address || undefined
         };
         
         // Extract the sortBy and sortOrder parameters from the query
