@@ -12,15 +12,9 @@
  *         cause:
  *           type: string
  *           example: "Electrical malfunction"
- *         suburb:
+ *         address:
  *           type: string
- *           example: "Dunedin"
- *         street:
- *           type: string
- *           example: "George Street"
- *         buildingNumber:
- *           type: string
- *           example: "12"
+ *           example: "420 Castle street"  
  *         recordedAt:
  *           type: string
  *           format: date-time
@@ -92,26 +86,16 @@
  *           type: string
  *         description: Filter incidents by cause
  *       - in: query
- *         name: suburb
+ *         name: address
  *         schema:
  *           type: string
- *         description: Filter incidents by suburb
- *       - in: query
- *         name: street
- *         schema:
- *           type: string
- *         description: Filter incidents by street
- *       - in: query
- *         name: buildingNumber
- *         schema:
- *           type: string
- *         description: Filter incidents by building number
+ *         description: Filter incidents by address
  *       - in: query
  *         name: sortBy
  *         schema:
  *           type: string
  *           default: "id"
- *           enum: [id, description, cause, suburb, street, buildingNumber, recordedAt]
+ *           enum: [id, description, cause, address, recordedAt]
  *         description: Field to sort the incidents by (default is 'id')
  *       - in: query
  *         name: sortOrder
