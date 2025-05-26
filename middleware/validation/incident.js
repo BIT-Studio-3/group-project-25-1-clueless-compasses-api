@@ -38,8 +38,8 @@ const validatePostIncident = (req, res, next) => {
   });
 
   const { error } = incidentSchema.validate(req.body);
-  console.log('📦 req.body:', req.body);
-  console.log('🖼️ req.file:', req.file);
+  console.log('req.body:', req.body);
+  console.log('req.file:', req.file);
 
   if (error) {
     return res.status(409).json({
