@@ -13,10 +13,10 @@
  *           example: Fire in storage room
  *         cause:
  *           type: string
- *           example: Faulty wiring
+ *           example: "Electrical malfunction"
  *         address:
  *           type: string
- *           example: 123 Main St, Auckland
+ *           example: "420 Castle street"  
  *         recordedAt:
  *           type: string
  *           format: date-time
@@ -136,11 +136,14 @@
  *         name: address
  *         schema:
  *           type: string
+ *         description: Filter incidents by address
  *       - in: query
  *         name: sortBy
  *         schema:
  *           type: string
- *           example: recordedAt
+ *           default: "id"
+ *           enum: [id, description, cause, address, recordedAt]
+ *         description: Field to sort the incidents by (default is 'id')
  *       - in: query
  *         name: sortOrder
  *         schema:
