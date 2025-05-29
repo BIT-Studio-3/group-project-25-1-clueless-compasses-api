@@ -21,6 +21,13 @@ const validatePostIncident = (req, res, next) => {
             "string.max": "cause should have a maximum length of {#limit}",
             "any.required": "cause is required",
         }),
+        source : Joi.string().min(3).max(200).required().messages({
+            "string.base": "source  should be a string",
+            "string.empty": "source  cannot be empty",
+            "string.min": "source  should have a minimum length of {#limit}",
+            "string.max": "source  should have a maximum length of {#limit}",
+            "any.required": "source  is required",
+        }),
         address: Joi.string().min(3).max(100).required().messages({
             "string.base": "Address should be a string",
             "string.empty": "Address cannot be empty",
@@ -59,11 +66,19 @@ const validatePutIncident = (req, res, next) => {
             "string.min": "cause should have a minimum length of {#limit}",
             "string.max": "cause should have a maximum length of {#limit}",
         }),
+        source : Joi.string().min(3).max(200).optional().messages({
+            "string.base": "source  should be a string",
+            "string.empty": "source  cannot be empty",
+            "string.min": "source  should have a minimum length of {#limit}",
+            "string.max": "source  should have a maximum length of {#limit}",
+        }),
+
         Address: Joi.string().min(3).max(100).optional().messages({
             "string.base": "Address should be a string",
             "string.empty": "Address cannot be empty",
             "string.min": "Address should have a minimum length of {#limit}",
             "string.max": "Address should have a maximum length of {#limit}",
+
         }),
         recordedAt: Joi.date().optional().messages({
             "date.base": "recordedAt should be a valid date",

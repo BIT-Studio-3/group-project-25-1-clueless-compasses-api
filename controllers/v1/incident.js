@@ -12,6 +12,7 @@ const returnData = {
     id: true,
     description: true,
     cause: true,
+    source: true,
     address: true,
     recordedAt: true,
     photoUrl: true,
@@ -55,6 +56,7 @@ const getIncidents = async (req, res) => {
         const filters = {
             description: req.query.description || undefined,
             cause: req.query.cause || undefined,
+            source: req.query.source || undefined,
             address: req.query.address || undefined
         };
         

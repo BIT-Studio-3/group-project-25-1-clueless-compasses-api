@@ -14,6 +14,9 @@
  *         cause:
  *           type: string
  *           example: "Electrical malfunction"
+ *         source:
+ *           type: string
+ *           example: "ODT"
  *         address:
  *           type: string
  *           example: "420 Castle street"  
@@ -133,6 +136,10 @@
  *         schema:
  *           type: string
  *       - in: query
+ *         name: source
+ *         schema:
+ *           type: string
+ *         description: Filter incidents by source
  *         name: address
  *         schema:
  *           type: string
