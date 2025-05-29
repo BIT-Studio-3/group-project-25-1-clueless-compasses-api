@@ -24,10 +24,10 @@
  *         contactInfo:
  *           type: string
  *           example: "0800 DEFENCE"
- *         Source:
+ *         source:
  *           type: string
  *           example: "ODT"
- *         RelevantDetails:
+ *         relevantDetails:
  *           type: string
  *           example: "Flooding in residential area"
  *         createdAt:
@@ -62,7 +62,7 @@
  *               - severity
  *               - status
  *               - contactInfo
- *               - RelevantDetails
+ *               - relevantDetails
  *             properties:
  *               agency:
  *                 type: string
@@ -74,7 +74,7 @@
  *                 type: string
  *               contactInfo:
  *                 type: string
- *               RelevantDetails:
+ *               relevantDetails:
  *                 type: string
  *             example:
  *               agency: "Civil Defence"
@@ -82,8 +82,8 @@
  *               severity: "High"
  *               status: "Active"
  *               contactInfo: "0800 DEFENCE"
- *               Source: "ODT"
- *               RelevantDetails: "Flooding in residential area, water levels rising rapidly"
+ *               source: "ODT"
+ *               relevantDetails: "Flooding in residential area, water levels rising rapidly"
  *     responses:
  *       '201':
  *         description: Hazard successfully created
@@ -133,11 +133,11 @@
  *         schema:
  *           type: string
  *       - in: query
- *         name: Source
+ *         name: source
  *         schema:
  *           type: string
  *       - in: query
- *         name: RelevantDetails
+ *         name: relevantDetails
  *         schema:
  *           type: string
  *       - in: query
