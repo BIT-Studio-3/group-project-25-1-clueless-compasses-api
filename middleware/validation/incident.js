@@ -1,6 +1,11 @@
-import Joi from "joi";
-
+import Joi from 'joi';
 const validatePostIncident = (req, res, next) => {
+
+  // ✅ Coerce recordedAt into a Date object if it's a string (common with FormData)
+  if (req.body.recordedAt && typeof req.body.recordedAt === 'string') {
+    req.body.recordedAt = new Date(req.body.recordedAt);
+  }
+
     const incidentSchema = Joi.object({
         description: Joi.string().min(3).max(500).required().messages({
             "string.base": "description should be a string",
@@ -34,18 +39,13 @@ const validatePostIncident = (req, res, next) => {
         }),
     });
 
-    const { error } = incidentSchema.validate(req.body);
 
-    if (error) {
-        return res.status(409).json({
-            message: error.details[0].message,
-        });
-    }
 
-    next();
+  next();
 };
 
 const validatePutIncident = (req, res, next) => {
+
     const incidentSchema = Joi.object({
         description: Joi.string().min(3).max(500).optional().messages({
             "string.base": "description should be a string",
@@ -74,15 +74,16 @@ const validatePutIncident = (req, res, next) => {
         }),
     }).min(1);
 
-    const { error } = incidentSchema.validate(req.body);
 
-    if (error) {
-        return res.status(409).json({
-            message: error.details[0].message,
-        });
-    }
+  const { error } = incidentSchema.validate(req.body);
 
-    next();
+  if (error) {
+    return res.status(409).json({
+      message: error.details[0].message,
+    });
+  }
+
+  next();
 };
 
 export { validatePostIncident, validatePutIncident };
