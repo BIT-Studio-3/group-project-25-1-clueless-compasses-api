@@ -8,15 +8,13 @@ import GenericRepository from '../../repositories/generic.js';
 const incidentRepository = new GenericRepository('incident');
 
 const returnData = {
-
-    id: true,
-    description: true,
-    cause: true,
-    source: true,
-    address: true,
-    recordedAt: true,
-    photoUrl: true,
-
+  id: true,
+  description: true,
+  cause: true,
+  source: true,
+  address: true,
+  recordedAt: true,
+  photoUrl: true,
 };
 
 const createIncident = async (req, res) => {
@@ -32,6 +30,7 @@ const createIncident = async (req, res) => {
     const incidentData = {
       description: req.body.description,
       cause: req.body.cause,
+      source: req.body.source,
       address: req.body.address,
       recordedAt: req.body.recordedAt,
       photoUrl,
@@ -50,27 +49,30 @@ const createIncident = async (req, res) => {
 };
 
 const getIncidents = async (req, res) => {
+  try {
+    // Extract filters from the query parameters
+    const filters = {
+      description: req.query.description || undefined,
+      cause: req.query.cause || undefined,
+      source: req.query.source || undefined,
+      address: req.query.address || undefined,
+    };
 
-    try {
-        // Extract filters from the query parameters
-        const filters = {
-            description: req.query.description || undefined,
-            cause: req.query.cause || undefined,
-            source: req.query.source || undefined,
-            address: req.query.address || undefined
-        };
-        
-        // Extract the sortBy and sortOrder parameters from the query
-        const sortBy = req.query.sortBy || "id";
-        const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
+    // Extract the sortBy and sortOrder parameters from the query
+    const sortBy = req.query.sortBy || 'id';
+    const sortOrder = req.query.sortOrder === 'desc' ? 'desc' : 'asc';
 
-        // Retrieve incidents based on the filters, sorted by the specified column and order
-        const incidents = await incidentRepository.findAll(returnData, filters, sortBy, sortOrder);
+    // Retrieve incidents based on the filters, sorted by the specified column and order
+    const incidents = await incidentRepository.findAll(
+      returnData,
+      filters,
+      sortBy,
+      sortOrder,
+    );
 
-        if (!incidents) {
-            return res.status(404).json({ message: "No incidents found" });
-        }
-
+    if (!incidents) {
+      return res.status(404).json({ message: 'No incidents found' });
+    }
 
     return res.status(200).json({
       //Shows "no data" when database is empty
