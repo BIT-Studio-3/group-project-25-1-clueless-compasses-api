@@ -13,8 +13,9 @@ const returnData = {
   cause: true,
   source: true,
   address: true,
-  recordedAt: true,
   photoUrl: true,
+  createdAt: true,
+  updatedAt: true
 };
 
 const createIncident = async (req, res) => {
