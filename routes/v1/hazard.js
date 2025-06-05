@@ -1,35 +1,30 @@
 /**
  * @file This file exports the router for the hazard routes.
- * @author Clueless Compassess Studio 3 Group
+ * @author Clueless Compass
  */
 
-import createRouter from "./base.js";
-
+import express from "express";
 import {
   getHazard,
   getHazards,
   createHazard,
   updateHazard,
   deleteHazard,
-} from '../../controllers/v1/hazard.js';
+} from "../../controllers/v1/hazard.js";
 
 import {
   validatePostHazard,
   validatePutHazard,
 } from "../../middleware/validation/hazard.js";
 
-const hazardController = {
-  get: getHazards,
-  getById: getHazard,
-  create: createHazard,
-  update: updateHazard,
-  delete: deleteHazard,
-};
+import authMiddleware from "../../middleware/auth.js";
 
-const hazardRouter = createRouter(
-  hazardController,
-  validatePostHazard,
-  validatePutHazard,
-);
+const router = express.Router();
 
-export default hazardRouter;
+router.get("/", authMiddleware, getHazards);
+router.get("/:id", authMiddleware, getHazard);
+router.post("/", authMiddleware, validatePostHazard, createHazard);
+router.put("/:id", authMiddleware, validatePutHazard, updateHazard);
+router.delete("/:id", authMiddleware, deleteHazard);
+
+export default router;

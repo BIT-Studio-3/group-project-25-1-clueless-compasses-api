@@ -1,35 +1,25 @@
-/**
- * @file This file exports the router for the incident routes.
- * @author Clueless Compassess Studio 3 Group
- */
-
-import createRouter from "./base.js";
-
+import express from "express";
 import {
   getIncident,
   getIncidents,
   createIncident,
   updateIncident,
   deleteIncident,
-} from '../../controllers/v1/incident.js';
+} from "../../controllers/v1/incident.js";
 
 import {
   validatePostIncident,
   validatePutIncident,
 } from "../../middleware/validation/incident.js";
 
-const incidentController = {
-  get: getIncidents,
-  getById: getIncident,
-  create: createIncident,
-  update: updateIncident,
-  delete: deleteIncident,
-};
+import authMiddleware from "../../middleware/auth.js";
 
-const incidentRouter = createRouter(
-  incidentController,
-  validatePostIncident,
-  validatePutIncident,
-);
+const router = express.Router();
 
-export default incidentRouter;
+router.get("/", authMiddleware, getIncidents);
+router.get("/:id", authMiddleware, getIncident);
+router.post("/", authMiddleware, validatePostIncident, createIncident);
+router.put("/:id", authMiddleware, validatePutIncident, updateIncident);
+router.delete("/:id", authMiddleware, deleteIncident);
+
+export default router;
