@@ -10,13 +10,16 @@
  *           format: uuid
  *         description:
  *           type: string
- *           example: Fire in storage room
+ *           example: Smoke detected in electrical cabinet
  *         cause:
  *           type: string
- *           example: "Electrical malfunction"
+ *           example: Short circuit in power relay
+ *         source:
+ *           type: string
+ *           example: BMS (Building Management System)
  *         address:
  *           type: string
- *           example: "420 Castle street"  
+ *           example: 77 Queen Street, Auckland CBD, Auckland 1010, New Zealand
  *         recordedAt:
  *           type: string
  *           format: date-time
@@ -24,7 +27,7 @@
  *         photoUrl:
  *           type: string
  *           format: uri
- *           example: /uploads/photo123.jpg
+ *           example: /uploads/incidents/electrical-fire-0523.jpg
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -39,16 +42,20 @@
  *         - cause
  *         - address
  *         - recordedAt
+ *         - source
  *       properties:
  *         description:
  *           type: string
- *           example: Fire in storage room
+ *           example: Smoke detected in server room
  *         cause:
  *           type: string
- *           example: Faulty wiring
+ *           example: HVAC system overheating
+ *         source:
+ *           type: string
+ *           example: Fire Alarm Panel
  *         address:
  *           type: string
- *           example: 123 Main St, Auckland
+ *           example: 456 Industrial Avenue, Christchurch 8011
  *         recordedAt:
  *           type: string
  *           format: date-time
@@ -56,7 +63,6 @@
  *
  * tags:
  *   - name: Incidents
- *     description: Incident reporting and retrieval
  */
 
 /**
@@ -76,10 +82,13 @@
  *               - cause
  *               - address
  *               - recordedAt
+ *               - source
  *             properties:
  *               description:
  *                 type: string
  *               cause:
+ *                 type: string
+ *               source:
  *                 type: string
  *               address:
  *                 type: string
@@ -113,6 +122,7 @@
  *               properties:
  *                 message:
  *                   type: string
+ *                   example: Missing required fields
  *       500:
  *         description: Server error
  */
@@ -133,6 +143,11 @@
  *         schema:
  *           type: string
  *       - in: query
+ *         name: source
+ *         schema:
+ *           type: string
+ *         description: Filter incidents by source
+ *       - in: query
  *         name: address
  *         schema:
  *           type: string
@@ -142,7 +157,7 @@
  *         schema:
  *           type: string
  *           default: "id"
- *           enum: [id, description, cause, address, recordedAt]
+ *           enum: [id, description, cause, source, address, recordedAt]
  *         description: Field to sort the incidents by (default is 'id')
  *       - in: query
  *         name: sortOrder
@@ -159,7 +174,7 @@
  *               properties:
  *                 msg:
  *                   type: string
- *                   example: No data
+ *                   example: Data retrieved successfully
  *                 data:
  *                   type: array
  *                   items:

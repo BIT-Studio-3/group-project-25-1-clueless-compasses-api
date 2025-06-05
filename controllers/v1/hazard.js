@@ -14,9 +14,11 @@ const returnData = {
     severity: true,
     status: true,
     contactInfo: true,
-    RelevantDetails: true
+    source: true,
+    relevantDetails: true,
+    createdAt: true,
+    updatedAt: true
 }
-
 const createHazard = async (req, res) => {
     // Try/catch blocks are used to handle exceptions
     try {
@@ -44,7 +46,8 @@ const getHazards = async (req, res) => {
             severity: req.query.severity || undefined,
             status: req.query.status || undefined,
             contactInfo: req.query.contactInfo || undefined,
-            RelevantDetails: req.query.RelevantDetails || undefined,
+            source: req.query.source || undefined,
+            relevantDetails: req.query.relevantDetails || undefined,
         };
 
         // Extract the sortBy and sortOrder parameters from the query
