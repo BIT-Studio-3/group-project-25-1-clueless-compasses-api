@@ -33,7 +33,8 @@ model Hazard {
   severity        String
   status          String
   contactInfo     String
-  RelevantDetails String
+  source          String
+  relevantDetails String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @default(now())
 }
@@ -42,11 +43,10 @@ model Incident {
   id             String   @id @default(uuid())
   description    String
   cause          String
-  suburb         String
-  street         String?
-  buildingNumber String?
+  source         String
+  address        String?
   recordedAt     DateTime
-  photoUrl       String? // assuming you store the file URL
+  photoUrl       String?
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now())
 }

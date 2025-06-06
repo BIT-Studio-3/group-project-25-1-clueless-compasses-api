@@ -6,54 +6,100 @@
  *       type: object
  *       properties:
  *         id:
+ *           type: string
+ *           format: uuid
  *         description:
  *           type: string
- *           example: "Fire at the old warehouse"
+ *           example: Smoke detected in electrical cabinet
  *         cause:
  *           type: string
- *           example: "Electrical malfunction"
- *         suburb:
+ *           example: Short circuit in power relay
+ *         source:
  *           type: string
- *           example: "Dunedin"
- *         street:
+ *           example: BMS (Building Management System)
+ *         address:
  *           type: string
- *           example: "George Street"
- *         buildingNumber:
- *           type: string
- *           example: "12"
+ *           example: 77 Queen Street, Auckland CBD, Auckland 1010, New Zealand
  *         recordedAt:
  *           type: string
  *           format: date-time
- *           example: "2025-04-25T14:00:00Z"
+ *           example: 2025-05-23T14:30:00Z
  *         photoUrl:
  *           type: string
- *           example: "https://example.com/photo.jpg"
- *   securitySchemes:
- *     BearerAuth:
- *       type: http
- *       scheme: bearer
- *       bearerFormat: JWT
- *   security:
- *     - BearerAuth: []
+ *           format: uri
+ *           example: /uploads/incidents/electrical-fire-0523.jpg
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *
+ *     IncidentInput:
+ *       type: object
+ *       required:
+ *         - description
+ *         - cause
+ *         - address
+ *         - recordedAt
+ *         - source
+ *       properties:
+ *         description:
+ *           type: string
+ *           example: Smoke detected in server room
+ *         cause:
+ *           type: string
+ *           example: HVAC system overheating
+ *         source:
+ *           type: string
+ *           example: Fire Alarm Panel
+ *         address:
+ *           type: string
+ *           example: 456 Industrial Avenue, Christchurch 8011
+ *         recordedAt:
+ *           type: string
+ *           format: date-time
+ *           example: 2025-05-23T14:30:00Z
+ *
+ * tags:
+ *   - name: Incidents
  */
 
 /**
  * @swagger
  * /api/v1/incidents:
  *   post:
- *     summary: Create a new incident
- *     tags:
- *       - Incident
- *     security:
- *       - BearerAuth: []
+ *     summary: Create a new incident report
+ *     tags: [Incidents]
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/Incident'
+ *             type: object
+ *             required:
+ *               - description
+ *               - cause
+ *               - address
+ *               - recordedAt
+ *               - source
+ *             properties:
+ *               description:
+ *                 type: string
+ *               cause:
+ *                 type: string
+ *               source:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               recordedAt:
+ *                 type: string
+ *                 format: date-time
+ *               photo:
+ *                 type: string
+ *                 format: binary
  *     responses:
- *       '201':
+ *       201:
  *         description: Incident successfully created
  *         content:
  *           application/json:
@@ -62,13 +108,23 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Incident successfully created"
+ *                   example: Incident successfully created
  *                 data:
  *                   type: array
  *                   items:
  *                     $ref: '#/components/schemas/Incident'
- *       '500':
- *         description: Internal server error
+ *       409:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Missing required fields
+ *       500:
+ *         description: Server error
  */
 
 /**
@@ -76,92 +132,84 @@
  * /api/v1/incidents:
  *   get:
  *     summary: Get all incidents
- *     tags:
- *       - Incident
- *     security:
- *       - BearerAuth: []
+ *     tags: [Incidents]
  *     parameters:
  *       - in: query
  *         name: description
  *         schema:
  *           type: string
- *         description: Filter incidents by description
  *       - in: query
  *         name: cause
  *         schema:
  *           type: string
- *         description: Filter incidents by cause
  *       - in: query
- *         name: suburb
+ *         name: source
  *         schema:
  *           type: string
- *         description: Filter incidents by suburb
+ *         description: Filter incidents by source
  *       - in: query
- *         name: street
+ *         name: address
  *         schema:
  *           type: string
- *         description: Filter incidents by street
- *       - in: query
- *         name: buildingNumber
- *         schema:
- *           type: string
- *         description: Filter incidents by building number
+ *         description: Filter incidents by address
  *       - in: query
  *         name: sortBy
  *         schema:
  *           type: string
  *           default: "id"
- *           enum: [id, description, cause, suburb, street, buildingNumber, recordedAt]
+ *           enum: [id, description, cause, source, address, recordedAt]
  *         description: Field to sort the incidents by (default is 'id')
  *       - in: query
  *         name: sortOrder
  *         schema:
  *           type: string
- *           default: "asc"
  *           enum: [asc, desc]
- *         description: Order to sort the incidents by (default is 'asc')
  *     responses:
- *       '200':
- *         description: Success
+ *       200:
+ *         description: A list of incidents
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Incident'
- *       '404':
- *         description: No incidents found
- *       '500':
- *         description: Internal server error
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: Data retrieved successfully
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Incident'
+ *       500:
+ *         description: Server error
  */
 
 /**
  * @swagger
  * /api/v1/incidents/{id}:
  *   get:
- *     summary: Get an incident by ID
- *     tags:
- *       - Incident
- *     security:
- *       - BearerAuth: []
+ *     summary: Get a specific incident by ID
+ *     tags: [Incidents]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: The incident ID
+ *           format: uuid
  *     responses:
- *       '200':
- *         description: Success
+ *       200:
+ *         description: The incident data
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Incident'
- *       '404':
- *         description: No incident found with the provided ID
- *       '500':
- *         description: Internal server error
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Incident'
+ *       404:
+ *         description: Incident not found
+ *       500:
+ *         description: Server error
  */
 
 /**
@@ -169,30 +217,26 @@
  * /api/v1/incidents/{id}:
  *   put:
  *     summary: Update an incident by ID
- *     tags:
- *       - Incident
- *     security:
- *       - BearerAuth: []
+ *     tags: [Incidents]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: The incident ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Incident'
+ *             $ref: '#/components/schemas/IncidentInput'
  *     responses:
- *       '200':
+ *       200:
  *         description: Incident successfully updated
- *       '404':
- *         description: No incident found with the provided ID
- *       '500':
- *         description: Internal server error
+ *       404:
+ *         description: Incident not found
+ *       500:
+ *         description: Server error
  */
 
 /**
@@ -200,22 +244,18 @@
  * /api/v1/incidents/{id}:
  *   delete:
  *     summary: Delete an incident by ID
- *     tags:
- *       - Incident
- *     security:
- *       - BearerAuth: []
+ *     tags: [Incidents]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: The incident ID
  *     responses:
- *       '200':
+ *       200:
  *         description: Incident successfully deleted
- *       '404':
- *         description: No incident found with the provided ID
- *       '500':
- *         description: Internal server error
+ *       404:
+ *         description: Incident not found
+ *       500:
+ *         description: Server error
  */

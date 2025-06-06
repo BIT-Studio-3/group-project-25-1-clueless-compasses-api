@@ -11,7 +11,9 @@ const returnData = {
   id: true,
   firstName: true,
   lastName: true,
-  emailAddress: true
+  emailAddress: true,
+  createdAt: true,
+  updatedAt: true
 }
 
 const createUser = async (req, res) => {

@@ -37,12 +37,19 @@ const validatePostHazard = (req, res, next) => {
             "string.max": "contactInfo should have a maximum length of {#limit}",
             "any.required": "contactInfo is required",
         }),
-        RelevantDetails: Joi.string().min(3).max(500).required().messages({
-            "string.base": "RelevantDetails should be a string",
-            "string.empty": "RelevantDetails cannot be empty",
-            "string.min": "RelevantDetails should have a minimum length of {#limit}",
-            "string.max": "RelevantDetails should have a maximum length of {#limit}",
-            "any.required": "RelevantDetails is required",
+        relevantDetails: Joi.string().min(3).max(500).required().messages({
+            "string.base": "relevantDetails should be a string",
+            "string.empty": "relevantDetails cannot be empty",
+            "string.min": "relevantDetails should have a minimum length of {#limit}",
+            "string.max": "relevantDetails should have a maximum length of {#limit}",
+            "any.required": "relevantDetails is required",
+        }),
+        source: Joi.string().min(3).max(500).required().messages({
+            "string.base": "source should be a string",
+            "string.empty": "source cannot be empty",
+            "string.min": "source should have a minimum length of {#limit}",
+            "string.max": "source should have a maximum length of {#limit}",
+            "any.required": "source is required",
         }),
     });
 
@@ -89,11 +96,17 @@ const validatePutHazard = (req, res, next) => {
             "string.min": "contactInfo should have a minimum length of {#limit}",
             "string.max": "contactInfo should have a maximum length of {#limit}",
         }),
-        RelevantDetails: Joi.string().min(3).max(500).optional().messages({
-            "string.base": "RelevantDetails should be a string",
-            "string.empty": "RelevantDetails cannot be empty",
-            "string.min": "RelevantDetails should have a minimum length of {#limit}",
-            "string.max": "RelevantDetails should have a maximum length of {#limit}",
+        relevantDetails: Joi.string().min(3).max(500).optional().messages({
+            "string.base": "relevantDetails should be a string",
+            "string.empty": "relevantDetails cannot be empty",
+            "string.min": "relevantDetails should have a minimum length of {#limit}",
+            "string.max": "relevantDetails should have a maximum length of {#limit}",
+        }),
+        source: Joi.string().min(3).max(500).optional().messages({
+            "string.base": "source should be a string",
+            "string.empty": "source cannot be empty",
+            "string.min": "source should have a minimum length of {#limit}",
+            "string.max": "source should have a maximum length of {#limit}",
         }),
     }).min(1);
 
